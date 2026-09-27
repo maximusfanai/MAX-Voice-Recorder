@@ -36,8 +36,10 @@ st.set_page_config(
 
 # --- SESSION STATES INITIALIZATION ---
 st.session_state.splash_done = True
-st.session_state.page_mode = "app_main"
 st.session_state.logged_in_user = "joltaflm349@gmail.com"
+
+if "current_page" not in st.session_state:
+  st.session_state.current_page = "HOMEPAGE"
 
 if "split_done" not in st.session_state:
   st.session_state.split_done = False
@@ -127,34 +129,6 @@ st.markdown(
         padding-top: 0px !important;
         margin-top: 0px !important;
     }
-    
-    [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] {
-        background-color: #0d1222 !important;
-        border: 1px solid #1e293b !important;
-        border-radius: 6px !important;
-        padding: 6px 10px !important;
-        margin-bottom: 7px !important;
-        box-shadow: none !important;
-        transition: all 0.2s ease-in-out !important;
-    }
-    
-    [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"]:hover {
-        background-color: #172036 !important;
-        border-color: #00a8ff !important;
-    }
-    
-    [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"][aria-current="page"] {
-        background-color: #131b31 !important;
-        border: 1px solid #00a8ff !important;
-        box-shadow: 0 0 6px rgba(0, 168, 255, 0.3) !important;
-    }
-
-    [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] p {
-        color: #f1f5f9 !important;
-        font-weight: 600 !important;
-        font-size: 13px !important;
-        letter-spacing: 0.3px !important;
-    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -174,18 +148,77 @@ with st.sidebar:
       unsafe_allow_html=True,
   )
 
-  st.page_link("pages/homepage.py", label="🏠 HOMEPAGE")
-  st.page_link("pages/stem_splitter.py", label="🎛️ STEM SPLITTER")
-  st.page_link("pages/voice_recorder.py", label="🎙️ VOICE RECORDER")
-  st.page_link("pages/stemtube.py", label="📥 STEMTUBE")
-  st.page_link("pages/recent_files.py", label="🕒 RECENT FILES")
-  st.page_link("pages/cloud_drive.py", label="☁️ CLOUD DRIVE")
-  st.page_link("pages/settings.py", label="⚙️ SETTINGS")
+  # Custom sidebar navigation buttons
+  if st.sidebar.button("🏠 HOMEPAGE", use_container_width=True):
+    st.session_state.current_page = "HOMEPAGE"
+  if st.sidebar.button("🎛️ STEM SPLITTER", use_container_width=True):
+    st.session_state.current_page = "STEM_SPLITTER"
+  if st.sidebar.button("🎙️ VOICE RECORDER", use_container_width=True):
+    st.session_state.current_page = "VOICE_RECORDER"
+  if st.sidebar.button("📥 STEMTUBE", use_container_width=True):
+    st.session_state.current_page = "STEMTUBE"
+  if st.sidebar.button("🕒 RECENT FILES", use_container_width=True):
+    st.session_state.current_page = "RECENT_FILES"
+  if st.sidebar.button("☁️ CLOUD DRIVE", use_container_width=True):
+    st.session_state.current_page = "CLOUD_DRIVE"
+  if st.sidebar.button("⚙️ SETTINGS", use_container_width=True):
+    st.session_state.current_page = "SETTINGS"
 
-# --- HOMEPAGE CONTENT EXECUTION ---
-try:
-  from pages.homepage import show_homepage
+# --- PAGE ROUTING ---
+page = st.session_state.current_page
 
-  show_homepage()
-except Exception:
-  st.warning("⚠️ 'pages/homepage.py' hmuh a ni lo.")
+if page == "HOMEPAGE":
+  try:
+    from homepage import show_homepage
+
+    show_homepage()
+  except Exception as e:
+    st.warning(f"⚠️ 'homepage.py' load lai buaina: {e}")
+
+elif page == "STEM_SPLITTER":
+  try:
+    from stem_splitter import show_stem_splitter
+
+    show_stem_splitter()
+  except Exception:
+    st.info("🎛️ Stem Splitter page loading...")
+
+elif page == "VOICE_RECORDER":
+  try:
+    from voice_recorder import show_voice_recorder
+
+    show_voice_recorder()
+  except Exception:
+    st.info("🎙️ Voice Recorder page loading...")
+
+elif page == "STEMTUBE":
+  try:
+    from stemtube import show_stemtube
+
+    show_stemtube()
+  except Exception:
+    st.info("📥 Stemtube page loading...")
+
+elif page == "RECENT_FILES":
+  try:
+    from recent_files import show_recent_files
+
+    show_recent_files()
+  except Exception:
+    st.info("🕒 Recent Files page loading...")
+
+elif page == "CLOUD_DRIVE":
+  try:
+    from cloud_drive import show_cloud_drive
+
+    show_cloud_drive()
+  except Exception:
+    st.info("☁️ Cloud Drive page loading...")
+
+elif page == "SETTINGS":
+  try:
+    from settings import show_settings
+
+    show_settings()
+  except Exception:
+    st.info("⚙️ Settings page loading...")
