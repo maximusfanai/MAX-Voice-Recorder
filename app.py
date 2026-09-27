@@ -174,7 +174,7 @@ with st.sidebar:
       unsafe_allow_html=True,
   )
 
-  st.page_link("homepage.py", label="🏠 HOMEPAGE")
+  st.page_link("pages/homepage.py", label="🏠 HOMEPAGE")
   st.page_link("pages/stem_splitter.py", label="🎛️ STEM SPLITTER")
   st.page_link("pages/voice_recorder.py", label="🎙️ VOICE RECORDER")
   st.page_link("pages/stemtube.py", label="📥 STEMTUBE")
