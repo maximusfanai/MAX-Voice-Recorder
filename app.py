@@ -174,18 +174,19 @@ with st.sidebar:
       unsafe_allow_html=True,
   )
 
-  st.page_link("pages/homepage.py", label="🏠 HOMEPAGE")
-  st.page_link("pages/stem_splitter.py", label="🎛️ STEM SPLITTER")
-  st.page_link("pages/voice_recorder.py", label="🎙️ VOICE RECORDER")
-  st.page_link("pages/stemtube.py", label="📥 STEMTUBE")
-  st.page_link("pages/recent_files.py", label="🕒 RECENT FILES")
-  st.page_link("pages/cloud_drive.py", label="☁️ CLOUD DRIVE")
-  st.page_link("pages/settings.py", label="⚙️ SETTINGS")
+  # Root directory-a awm ang vekin path kan siam tawh e:
+  st.page_link("homepage.py", label="🏠 HOMEPAGE")
+  st.page_link("stem_splitter.py", label="🎛️ STEM SPLITTER")
+  st.page_link("voice_recorder.py", label="🎙️ VOICE RECORDER")
+  st.page_link("stemtube.py", label="📥 STEMTUBE")
+  st.page_link("recent_files.py", label="🕒 RECENT FILES")
+  st.page_link("cloud_drive.py", label="☁️ CLOUD DRIVE")
+  st.page_link("settings.py", label="⚙️ SETTINGS")
 
 # --- HOMEPAGE CONTENT EXECUTION ---
 try:
-  from pages.homepage import show_homepage
+  from homepage import show_homepage
 
   show_homepage()
 except Exception:
-  st.warning("⚠️ 'pages/homepage.py' hmuh a ni lo.")
+  st.warning("⚠️ 'homepage.py' hmuh a ni lo.")
